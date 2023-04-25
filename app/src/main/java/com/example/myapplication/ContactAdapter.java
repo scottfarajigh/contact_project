@@ -88,6 +88,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
                     Toast.makeText(view.getContext(), fullName, Toast.LENGTH_SHORT).show();
                 }
             });
+            contactFullNameTv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    contacts.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    Toast.makeText(view.getContext(), fullName + " Is Deleted !", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
         }
     }
 
