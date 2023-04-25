@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/white</color>
-    <color name="colorPrimaryDark">@color/blue</color>
-    <color name="colorAccent">@color/blue</color>
+    <color name="colorPrimary">@color/realColor</color>
+    <color name="colorPrimaryDark">#FFE1931F</color>
+    <color name="colorAccent">@color/realColor</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -15,6 +15,6 @@
     <color name="blue">#007aff</color>
     <color name="gray100">#f5f5f5</color>
     <color name="gray600">#757575</color>
-
+    <color name="realColor">#FF9800</color>
 
 </resources>
