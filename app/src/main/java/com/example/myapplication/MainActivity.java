@@ -17,12 +17,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     ContactAdapter adapter;
+    ImageView addContactBtn;
+    EditText addContactFullName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,5 +36,19 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ContactAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
         recyclerView.setAdapter(adapter);
+
+        addContactFullName =findViewById(R.id.edAddContact);
+        addContactBtn=findViewById(R.id.addBtn);
+        addContactBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (addContactFullName.length() > 0){
+                    adapter.addContact(addContactFullName.getText().toString());
+                    recyclerView.smoothScrollToPosition(0);
+                }
+                addContactFullName.setText("");
+            }
+        });
+
     }
 }
