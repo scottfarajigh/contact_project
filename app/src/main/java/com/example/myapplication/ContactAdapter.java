@@ -14,8 +14,10 @@ import java.util.ArrayList;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
     ArrayList<String> contacts = new ArrayList<>();
+    ItemViewListener itemViewListener;
     private static final String TAG = "ContactAdapter";
-    ContactAdapter(){
+    ContactAdapter(ItemViewListener itemViewListener){
+        this.itemViewListener = itemViewListener;
         contacts.add("Ali alipour");
         contacts.add("Ali bahmani") ;
         contacts.add("Bardia rezari")  ;
@@ -42,6 +44,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         contacts.add(0,fullName);
         notifyItemInserted(0);
     }
+
+    public void changeContact(String fullname , int position){
+        contacts.set(position,fullname);
+        notifyItemChanged(position);
+    }
+
     @NonNull
     @Override
     public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -76,10 +84,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             contactFullNameTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    itemViewListener.onItemClick(fullName,getAdapterPosition());
                     Toast.makeText(view.getContext(), fullName, Toast.LENGTH_SHORT).show();
                 }
             });
         }
+    }
+
+    public interface ItemViewListener{
+        public void onItemClick(String fullName , int position);
     }
 
 }

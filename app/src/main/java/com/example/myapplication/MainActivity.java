@@ -23,7 +23,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ContactAdapter.ItemViewListener {
+    int editingItemPosition;
     ContactAdapter adapter;
     ImageView addContactBtn;
     EditText addContactFullName;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RecyclerView recyclerView =findViewById(R.id.newMainRv);
-        adapter = new ContactAdapter();
+        adapter = new ContactAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
         recyclerView.setAdapter(adapter);
 
@@ -43,12 +44,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (addContactFullName.length() > 0){
-                    adapter.addContact(addContactFullName.getText().toString());
-                    recyclerView.smoothScrollToPosition(0);
+                    if (editingItemPosition  > -1){
+                        adapter.changeContact(addContactFullName.getText().toString(),editingItemPosition);
+                        editingItemPosition = -1;
+                        addContactBtn.setImageResource(R.drawable.ic_baseline_person_add_alt_1_24);
+                    }else{
+                        adapter.addContact(addContactFullName.getText().toString());
+                        recyclerView.smoothScrollToPosition(0);
+                    }
+
                 }
                 addContactFullName.setText("");
             }
         });
+
+    }
+
+    @Override
+    public void onItemClick(String fullName, int position) {
+        addContactFullName.setText(fullName);
+        editingItemPosition=position;
+        addContactBtn.setImageResource(R.drawable.ic_baseline_done_24);
 
     }
 }
